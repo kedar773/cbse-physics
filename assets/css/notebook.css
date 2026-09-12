@@ -1,0 +1,815 @@
+/* ==========================================================================
+   CBSE PHYSICS DOTTED NOTEBOOK THEME - HIGH-DENSITY EDITION
+   Engineered for CBSE Class 11 & 12 • NCERT Strict Standard
+   Warm Canvas • Handwriting Inks • Highlighter Formula Boxes • Doodle Tags
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Kalam:wght@400;700&family=Patrick+Hand&display=swap');
+
+:root {
+  /* Warm Dotted Paper Palette */
+  --notebook-bg: #f5efe6;
+  --notebook-page: #fffdf9;
+  --notebook-card: #ffffff;
+  --notebook-border: #e6dcce;
+  --notebook-bezel: #8c8273;
+  --notebook-shadow: 0 4px 20px -2px rgba(80, 68, 52, 0.08);
+  --notebook-shadow-lg: 0 10px 30px -4px rgba(80, 68, 52, 0.12);
+  --notebook-margin-line: #ef4444;
+
+  /* Handwriting Fountain Pen & Marker Ink Palette */
+  --ink-charcoal: #1c1917;
+  --ink-slate: #334155;
+  --ink-blue: #1e3a8a;
+  --ink-blue-vivid: #1d4ed8;
+  --ink-blue-bg: rgba(29, 78, 216, 0.07);
+  --ink-crimson: #991b1b;
+  --ink-red: #dc2626;
+  --ink-red-bg: rgba(220, 38, 38, 0.08);
+  --ink-emerald: #065f46;
+  --ink-green: #15803d;
+  --ink-green-bg: rgba(21, 128, 61, 0.08);
+  --ink-purple: #581c87;
+  --ink-purple-vivid: #7e22ce;
+  --ink-purple-bg: rgba(126, 34, 206, 0.08);
+  --ink-amber: #b45309;
+
+  /* Fluorescent Highlighter Swatches */
+  --highlighter-yellow: rgba(254, 240, 138, 0.75);
+  --highlighter-yellow-border: #eab308;
+  --highlighter-green: rgba(187, 247, 208, 0.75);
+  --highlighter-green-border: #16a34a;
+  --highlighter-cyan: rgba(186, 230, 253, 0.75);
+  --highlighter-cyan-border: #0284c7;
+  --highlighter-peach: rgba(254, 215, 170, 0.75);
+  --highlighter-peach-border: #ea580c;
+  --highlighter-pink: rgba(252, 231, 243, 0.8);
+  --highlighter-pink-border: #db2777;
+
+  /* Sticky Notes */
+  --sticky-yellow: #fef9c3;
+  --sticky-yellow-border: #fde047;
+  --sticky-blue: #e0f2fe;
+  --sticky-blue-border: #7dd3fc;
+  --sticky-green: #dcfce7;
+  --sticky-green-border: #86efac;
+  --sticky-pink: #fce7f3;
+  --sticky-pink-border: #f472b6;
+  --sticky-purple: #f3e8ff;
+  --sticky-purple-border: #d8b4fe;
+
+  /* Typography */
+  --font-hand: 'Patrick Hand', cursive, sans-serif;
+  --font-marker: 'Caveat', cursive, sans-serif;
+  --font-title: 'Kalam', cursive, sans-serif;
+  --font-body: 'Patrick Hand', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Dotted Notebook Grid Settings */
+  --grid-dots: radial-gradient(#d1c4af 1.25px, transparent 1.25px);
+  --grid-size: 22px 22px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Increased Base Font Size from 16px to 18px for Superior Handwriting Legibility */
+html {
+  scroll-behavior: smooth;
+  font-size: 18px;
+}
+
+body {
+  font-family: var(--font-hand);
+  font-size: 1.25rem; /* ~22.5px equivalent for clear reading */
+  font-weight: 500;
+  background-color: var(--notebook-bg);
+  color: var(--ink-charcoal);
+  line-height: 1.65;
+  min-height: 100vh;
+  position: relative;
+  background-image: var(--grid-dots);
+  background-size: var(--grid-size);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(254, 240, 138, 0.95);
+  color: #0f172a;
+}
+
+/* Custom Notebook Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #f1ebd9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cfc5b2;
+  border-radius: 6px;
+  border: 2px solid #f1ebd9;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a89d89;
+}
+
+/* ==========================================================================
+   Typography Hierarchy: Multi-Color Fountain Pen & Marker Inks
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  line-height: 1.3;
+  font-weight: 700;
+  margin-top: 1.2rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  color: var(--ink-blue);
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 60%, #4338ca 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  border-bottom: 2px dashed rgba(30, 58, 138, 0.25);
+  padding-bottom: 0.35rem;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+  color: var(--ink-crimson);
+  background: linear-gradient(135deg, #9a3412 0%, #c2410c 50%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  color: var(--ink-emerald);
+  background: linear-gradient(135deg, #065f46 0%, #15803d 50%, #047857 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+}
+
+h4 {
+  font-size: 1.35rem;
+  color: var(--ink-purple-vivid);
+  display: block;
+}
+
+p, li, span, button, input {
+  font-family: var(--font-hand);
+}
+
+p {
+  font-size: 1.25rem;
+  margin-bottom: 0.85rem;
+  color: #1e293b;
+  line-height: 1.7;
+}
+
+li {
+  font-size: 1.22rem;
+  margin-bottom: 0.45rem;
+  line-height: 1.65;
+  color: #1e293b;
+}
+
+ul, ol {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+strong, b {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+a {
+  color: var(--ink-blue-vivid);
+  text-decoration: none;
+  transition: color 0.15s ease;
+  font-family: var(--font-hand);
+  font-weight: 600;
+}
+a:hover {
+  color: #1e3a8a;
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   KaTeX Formula Starch & High-Visibility Scaling
+   ========================================================================== */
+.katex {
+  font-size: 1.15em !important;
+}
+
+.katex-display {
+  font-size: 1.25em !important;
+  margin: 1rem 0 !important;
+  padding: 0.85rem 1.2rem !important;
+  background: rgba(254, 240, 138, 0.28);
+  border-left: 4px solid #eab308;
+  border-radius: 8px;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100% !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.katex-display::-webkit-scrollbar {
+  height: 5px;
+}
+.katex-display::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   Doodle Sketch Tags & 3D Stickers
+   ========================================================================== */
+.doodle-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-title);
+  font-size: 0.98rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  border: 2px solid #334155;
+  background: #ffffff;
+  color: #1e293b;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.doodle-tag:hover {
+  transform: translateY(-2px) rotate(-1deg);
+  box-shadow: 3px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.doodle-tag.tag-blue {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1e40af;
+}
+
+.doodle-tag.tag-yellow {
+  background: #fefce8;
+  border-color: #ca8a04;
+  color: #854d0e;
+}
+
+.doodle-tag.tag-green {
+  background: #f0fdf4;
+  border-color: #16a34a;
+  color: #166534;
+}
+
+.doodle-tag.tag-purple {
+  background: #faf5ff;
+  border-color: #9333ea;
+  color: #6b21a8;
+}
+
+.doodle-tag.tag-red {
+  background: #fef2f2;
+  border-color: #dc2626;
+  color: #991b1b;
+}
+
+/* ==========================================================================
+   Physical Sticky Notes
+   ========================================================================== */
+.sticky-note {
+  background: var(--sticky-yellow);
+  border: 1px solid var(--sticky-yellow-border);
+  border-radius: 6px;
+  padding: 1.25rem 1.45rem;
+  margin: 1.2rem 0;
+  box-shadow: 3px 4px 12px rgba(80, 68, 52, 0.12);
+  position: relative;
+  font-size: 1.18rem;
+  line-height: 1.6;
+}
+
+/* Tape Strip on Top of Sticky Note */
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 35%;
+  width: 90px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px dashed rgba(180, 160, 130, 0.5);
+  transform: rotate(-2deg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sticky-note.blue {
+  background: var(--sticky-blue);
+  border-color: var(--sticky-blue-border);
+}
+.sticky-note.green {
+  background: var(--sticky-green);
+  border-color: var(--sticky-green-border);
+}
+.sticky-note.pink, .sticky-note.red {
+  background: var(--sticky-pink);
+  border-color: var(--sticky-pink-border);
+}
+.sticky-note.purple {
+  background: var(--sticky-purple);
+  border-color: var(--sticky-purple-border);
+}
+
+.sticky-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.22rem;
+  color: #1e293b;
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ==========================================================================
+   Fluorescent Highlighter Formula Boxes
+   ========================================================================== */
+.formula-box, .highlighter-box {
+  background: var(--highlighter-yellow);
+  border: 2.5px dashed var(--highlighter-yellow-border);
+  border-radius: 12px;
+  padding: 1.2rem 1.6rem;
+  margin: 1.2rem 0;
+  position: relative;
+  box-shadow: 3px 3px 0px rgba(234, 179, 8, 0.3);
+}
+
+.formula-box.green {
+  background: var(--highlighter-green);
+  border-color: var(--highlighter-green-border);
+  box-shadow: 3px 3px 0px rgba(22, 163, 74, 0.3);
+}
+
+.formula-box.cyan {
+  background: var(--highlighter-cyan);
+  border-color: var(--highlighter-cyan-border);
+  box-shadow: 3px 3px 0px rgba(2, 132, 199, 0.3);
+}
+
+.formula-box.peach {
+  background: var(--highlighter-peach);
+  border-color: var(--highlighter-peach-border);
+  box-shadow: 3px 3px 0px rgba(234, 88, 12, 0.3);
+}
+
+/* ==========================================================================
+   Tables & Data Presentation
+   ========================================================================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  font-size: 1.15rem;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background: #f8fafc;
+  font-family: var(--font-title);
+  font-weight: 700;
+  color: #1e3a8a;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+tr:hover {
+  background: #fdfbf7;
+}
+
+/* Step Mark Tag Badge */
+.step-mark-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #15803d !important;
+  color: #ffffff !important;
+  font-family: var(--font-title);
+  font-size: 0.92rem;
+  font-weight: 700 !important;
+  padding: 0.2rem 0.7rem;
+  border-radius: 16px;
+  margin: 0 0.2rem;
+  box-shadow: 0 1px 3px rgba(21, 128, 61, 0.3);
+  vertical-align: middle;
+}
+
+.star-icon {
+  color: #eab308;
+  font-size: 1.15em;
+  letter-spacing: 2px;
+}
+
+/* ==========================================================================
+   Master Landing Portal & High-Density Chapter Card Grid
+   ========================================================================== */
+.portal-home {
+  background-color: var(--notebook-bg);
+  background-image: var(--grid-dots);
+  background-size: var(--grid-size);
+}
+
+.portal-main-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 6rem;
+}
+
+.portal-hero-section {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.portal-brand-stacked {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.stacked-brand-line1 {
+  font-family: var(--font-title);
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 700;
+  color: #1e3a8a;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.06);
+}
+
+.stacked-brand-line2 {
+  font-family: var(--font-marker);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 700;
+  color: #dc2626;
+  line-height: 1.1;
+  transform: rotate(-1.5deg);
+  display: inline-block;
+}
+
+.educator-stacked-title {
+  margin: 0.85rem 0 1.25rem;
+}
+
+.portal-standard-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  border: 2px dashed #ca8a04;
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #854d0e;
+  box-shadow: 2px 3px 0px rgba(202, 138, 4, 0.2);
+}
+
+.portal-search-box {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 30px;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+.portal-search-box:hover {
+  border-color: #2563eb;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
+  transform: translateY(-2px);
+}
+.search-box-placeholder {
+  flex: 1;
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  color: #64748b;
+  text-align: left;
+}
+.search-box-kbd {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.portal-stats-hud {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 1.75rem;
+}
+
+.stat-bubble {
+  background: #ffffff;
+  border: 1.5px solid #dfd4c2;
+  border-radius: 14px;
+  padding: 0.75rem 1.35rem;
+  text-align: center;
+  min-width: 130px;
+  box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.06);
+}
+.portal-stat-num {
+  font-family: var(--font-title);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  line-height: 1.2;
+}
+.stat-label {
+  font-family: var(--font-title);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Filter Bar */
+.portal-filter-bar {
+  background: #ffffff;
+  border: 1.5px solid #dfd4c2;
+  border-radius: 14px;
+  padding: 1.1rem 1.6rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.portal-class-tabs, .portal-domain-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.portal-class-tab {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  padding: 0.45rem 1.15rem;
+  border-radius: 20px;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.portal-class-tab:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+.portal-class-tab.active {
+  background: #1e3a8a;
+  color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+}
+
+.portal-domain-chip {
+  background: #fdfbf7;
+  border: 1px solid #dfd4c2;
+  padding: 0.3rem 0.85rem;
+  border-radius: 14px;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.portal-domain-chip:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+.portal-domain-chip.active {
+  background: #065f46;
+  color: #ffffff;
+  border-color: #065f46;
+}
+
+.portal-visible-count {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: right;
+}
+
+/* Chapter Cards Grid - DENSE & PACKED */
+.portal-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 1.5rem;
+}
+
+.notebook-chapter-card {
+  background: #fffdf9;
+  border: 1.5px solid #dfd4c2;
+  border-radius: 14px;
+  padding: 1.5rem 1.6rem;
+  position: relative;
+  box-shadow: 
+    0 0 0 1px #ebdcc9,
+    0 6px 18px rgba(70, 55, 35, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+
+/* Notebook card red left line */
+.notebook-chapter-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.2rem;
+  width: 2px;
+  background: #fca5a5;
+  opacity: 0.7;
+}
+
+.notebook-chapter-card:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+  box-shadow: 
+    0 12px 28px rgba(70, 55, 35, 0.12),
+    0 0 0 1px #94a3b8;
+}
+
+.card-top-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+  padding-left: 0.85rem;
+}
+
+.card-domain-label {
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-left: auto;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: 0.85rem;
+  padding-left: 0.85rem;
+}
+.card-title a {
+  font-family: var(--font-title);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  line-height: 1.3;
+  display: block;
+}
+.card-title a:hover {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.card-tags-tray {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  padding-left: 0.85rem;
+}
+
+.card-actions-tray {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding-left: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed #e2d8c9;
+}
+
+.card-action-btn {
+  flex: 1;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  text-align: center;
+  font-family: var(--font-title);
+  font-size: 0.98rem;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+.card-action-btn.primary {
+  background: #1e3a8a;
+  color: #ffffff;
+  border: 1px solid #1e3a8a;
+}
+.card-action-btn.primary:hover {
+  background: #1d4ed8;
+  color: #ffffff;
+  text-decoration: none;
+}
+.card-action-btn.secondary {
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+.card-action-btn.secondary:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+/* Site Footer */
+.notebook-footer {
+  background: #ffffff;
+  border-top: 2px solid #dfd4c2;
+  padding: 2rem 1.5rem;
+  margin-top: 4rem;
+}
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.footer-brand strong {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  color: #1e3a8a;
+  display: block;
+}
+.footer-brand p {
+  font-size: 1.05rem;
+  color: #64748b;
+  margin: 0;
+}
+.footer-contact-trigger {
+  background: #1e3a8a;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.25rem;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.footer-contact-trigger:hover {
+  background: #1d4ed8;
+}

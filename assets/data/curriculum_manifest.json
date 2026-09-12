@@ -1,0 +1,230 @@
+{
+  "curriculum": "CBSE Physics Class 11 & 12",
+  "chapters": [
+    {
+      "class": "11",
+      "slug": "01-units-and-measurements",
+      "title": "Units and Measurements",
+      "domain": "Measurement & Dimensions",
+      "priority": "⭐⭐⭐⭐",
+      "path": "class-11/01-units-and-measurements/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "11",
+      "slug": "02-motion-in-a-straight-line",
+      "title": "Motion in a Straight Line",
+      "domain": "Kinematics",
+      "priority": "⭐⭐⭐⭐",
+      "path": "class-11/02-motion-in-a-straight-line/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "03-motion-in-a-plane",
+      "title": "Motion in a Plane",
+      "domain": "Kinematics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/03-motion-in-a-plane/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "04-laws-of-motion",
+      "title": "Laws of Motion",
+      "domain": "Mechanics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/04-laws-of-motion/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "11",
+      "slug": "05-work-energy-and-power",
+      "title": "Work, Energy and Power",
+      "domain": "Mechanics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/05-work-energy-and-power/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "06-system-of-particles-and-rotational-motion",
+      "title": "System of Particles & Rotational Motion",
+      "domain": "Rotational Mechanics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/06-system-of-particles-and-rotational-motion/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "11",
+      "slug": "07-gravitation",
+      "title": "Gravitation",
+      "domain": "Gravitation",
+      "priority": "⭐⭐⭐⭐",
+      "path": "class-11/07-gravitation/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "08-mechanical-properties-of-solids",
+      "title": "Mechanical Properties of Solids",
+      "domain": "Properties of Matter",
+      "priority": "⭐⭐⭐",
+      "path": "class-11/08-mechanical-properties-of-solids/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "09-mechanical-properties-of-fluids",
+      "title": "Mechanical Properties of Fluids",
+      "domain": "Properties of Matter",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/09-mechanical-properties-of-fluids/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "10-thermal-properties-of-matter",
+      "title": "Thermal Properties of Matter",
+      "domain": "Thermal Physics",
+      "priority": "⭐⭐⭐⭐",
+      "path": "class-11/10-thermal-properties-of-matter/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "11-thermodynamics",
+      "title": "Thermodynamics",
+      "domain": "Thermal Physics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/11-thermodynamics/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "12-kinetic-theory",
+      "title": "Kinetic Theory of Gases",
+      "domain": "Thermal Physics",
+      "priority": "⭐⭐⭐⭐",
+      "path": "class-11/12-kinetic-theory/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "13-oscillations",
+      "title": "Oscillations",
+      "domain": "Oscillations & Waves",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/13-oscillations/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "11",
+      "slug": "14-waves",
+      "title": "Waves",
+      "domain": "Oscillations & Waves",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-11/14-waves/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "12",
+      "slug": "01-electrostatics",
+      "title": "Electrostatics & Capacitance",
+      "domain": "Electromagnetism",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/01-electrostatics/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "12",
+      "slug": "02-current-electricity",
+      "title": "Current Electricity",
+      "domain": "Electromagnetism",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/02-current-electricity/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "12",
+      "slug": "03-moving-charges-and-magnetism",
+      "title": "Moving Charges and Magnetism",
+      "domain": "Electromagnetism",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/03-moving-charges-and-magnetism/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "12",
+      "slug": "04-magnetism-and-matter",
+      "title": "Magnetism and Matter",
+      "domain": "Electromagnetism",
+      "priority": "⭐⭐⭐",
+      "path": "class-12/04-magnetism-and-matter/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "12",
+      "slug": "05-electromagnetic-induction-and-ac",
+      "title": "Electromagnetic Induction & AC",
+      "domain": "Electromagnetism",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/05-electromagnetic-induction-and-ac/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "12",
+      "slug": "06-electromagnetic-waves",
+      "title": "Electromagnetic Waves",
+      "domain": "Electromagnetism",
+      "priority": "⭐⭐⭐",
+      "path": "class-12/06-electromagnetic-waves/index.html",
+      "modules_count": 7
+    },
+    {
+      "class": "12",
+      "slug": "07-ray-optics-and-optical-instruments",
+      "title": "Ray Optics & Optical Instruments",
+      "domain": "Optics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/07-ray-optics-and-optical-instruments/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "12",
+      "slug": "08-wave-optics",
+      "title": "Wave Optics",
+      "domain": "Optics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/08-wave-optics/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "12",
+      "slug": "09-dual-nature-of-radiation-and-matter",
+      "title": "Dual Nature of Radiation & Matter",
+      "domain": "Modern Physics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/09-dual-nature-of-radiation-and-matter/index.html",
+      "modules_count": 6
+    },
+    {
+      "class": "12",
+      "slug": "10-atoms-and-nuclei",
+      "title": "Atoms & Nuclei",
+      "domain": "Modern Physics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/10-atoms-and-nuclei/index.html",
+      "modules_count": 8
+    },
+    {
+      "class": "12",
+      "slug": "11-semiconductor-electronics",
+      "title": "Semiconductor Electronics",
+      "domain": "Modern Physics & Electronics",
+      "priority": "⭐⭐⭐⭐⭐",
+      "path": "class-12/11-semiconductor-electronics/index.html",
+      "modules_count": 7
+    }
+  ]
+}

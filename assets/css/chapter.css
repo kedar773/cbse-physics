@@ -1,0 +1,745 @@
+/* ==========================================================================
+   PHYSICS NOTEBOOK CHAPTER STYLES & INTERACTIVE MULTI-TAB ARCHITECTURE
+   High-Density Handwritten Layout • Subtopic Quick Navigator • Smart Header
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Smart Auto-Hiding Top Bar & Navigation
+   ========================================================================== */
+.chapter-top-bar {
+  background: #ffffff;
+  border-bottom: 2px solid #e2d8c9;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.chapter-top-bar.header-hidden {
+  transform: translateY(-100%);
+  box-shadow: none;
+}
+
+.chapter-top-bar.header-visible {
+  transform: translateY(0);
+}
+
+.top-bar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.65rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.portal-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  transition: all 0.15s ease;
+}
+.portal-back-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  text-decoration: none;
+  transform: translateX(-2px);
+}
+
+.chapter-badge-class {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.chapter-domain-badge {
+  background: #fdf4ff;
+  color: #9333ea;
+  border: 1px solid #f0abfc;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.chapter-title-heading {
+  font-size: 1.35rem;
+  color: #0f172a;
+  margin: 0;
+  display: inline-block;
+  font-family: var(--font-title);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.chapter-select-menu {
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #1e293b;
+  cursor: pointer;
+  max-width: 260px;
+}
+.chapter-select-menu:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.search-trigger-btn, .scratchpad-toggle-btn {
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+.search-trigger-btn:hover, .scratchpad-toggle-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+.scratchpad-toggle-btn {
+  background: #fefce8;
+  border-color: #eab308;
+  color: #854d0e;
+}
+
+/* ==========================================================================
+   2. 5-Tab Marker Tray
+   ========================================================================== */
+.tab-marker-tray {
+  background: #f5efe6;
+  border-top: 1px solid #e7ded0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  padding: 0.35rem 1.5rem 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-marker-tray::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-marker-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #64748b;
+  padding: 0.55rem 1.15rem;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+.tab-marker-btn:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.6);
+}
+.tab-marker-btn.active {
+  color: #1e3a8a;
+  background: #fffdf9;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+}
+.tab-marker-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: #1e3a8a;
+  border-radius: 3px 3px 0 0;
+}
+
+.tab-marker-num {
+  font-size: 0.82rem;
+  font-weight: 800;
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   3. Notebook Page Viewport & Authentic Paper Canvas
+   ========================================================================== */
+.notebook-viewport {
+  width: 100%;
+  padding: 1.5rem 1rem 5rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.notebook-page-container {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  background: #fffdf9;
+  border: 1.5px solid #dfd4c2;
+  border-radius: 14px;
+  box-shadow: 
+    0 0 0 1px #ecdcc8,
+    0 12px 36px rgba(70, 55, 35, 0.08);
+  position: relative;
+  padding: 2.2rem 2.8rem 3.5rem 4.2rem;
+  overflow: hidden;
+}
+
+/* Ruled Red Left Notebook Margin Line */
+.notebook-page-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3rem;
+  width: 2.5px;
+  background: #f87171;
+  opacity: 0.85;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Spiral Ring Binding Holes on Left Edge */
+.notebook-page-container::after {
+  content: '';
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 12px;
+  width: 14px;
+  background-image: radial-gradient(circle, #382e22 36%, transparent 40%);
+  background-size: 14px 34px;
+  opacity: 0.38;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Chapter Hero Banner */
+.chapter-hero-banner {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px dashed #e2d8c9;
+}
+
+.hero-top-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.hero-main-title {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  color: #1e3a8a;
+  margin: 0.35rem 0 0.75rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-concept-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   4. Subtopic Quick Navigator (Eliminates Endless Scrolling!)
+   ========================================================================== */
+.subtopic-quick-navigator {
+  background: #fdfbf7;
+  border: 1.5px solid #e7ded0;
+  border-radius: 10px;
+  padding: 0.75rem 1.2rem;
+  margin: 1.25rem 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.navigator-label {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.navigator-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.topic-chip {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.topic-chip:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.toggle-modules-btn {
+  font-family: var(--font-title);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.toggle-modules-btn:hover {
+  background: #e2e8f0;
+}
+
+/* ==========================================================================
+   5. Collapsible Notebook Module Sheets
+   ========================================================================== */
+.notebook-module-sheet {
+  background: #ffffff;
+  border: 1.5px solid #e8e0d2;
+  border-radius: 12px;
+  margin-bottom: 1.85rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.notebook-module-sheet:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.module-header {
+  background: #faf7f2;
+  border-bottom: 1px solid #e8e0d2;
+  padding: 0.85rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.module-header:hover {
+  background: #f5f0e8;
+}
+
+.module-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.module-badge-num {
+  background: #1e3a8a;
+  color: #ffffff;
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 14px;
+}
+
+.module-heading-text {
+  font-family: var(--font-title);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.module-toggle-chevron {
+  font-size: 1.1rem;
+  color: #64748b;
+  transition: transform 0.2s ease;
+}
+
+.notebook-module-sheet.collapsed .module-toggle-chevron {
+  transform: rotate(-90deg);
+}
+.notebook-module-sheet.collapsed .module-body {
+  display: none;
+}
+
+.module-body {
+  padding: 1.5rem 1.8rem;
+}
+
+/* ==========================================================================
+   6. Tab Panes & Views
+   ========================================================================== */
+.notebook-tab-pane {
+  display: none;
+}
+.notebook-tab-pane.active {
+  display: block;
+  animation: paneFadeIn 0.22s ease-out;
+}
+
+@keyframes paneFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   7. Question Cards & Step Marking Rubrics
+   ========================================================================== */
+.question-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.35rem 1.6rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.question-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.question-card.mastered {
+  border-color: #86efac;
+  background: #fcfdfc;
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.question-title {
+  font-family: var(--font-title);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.question-text {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: #1e293b;
+}
+
+/* Collapsible Solution Accordion */
+details.solution-accordion {
+  background: #fafaf9;
+  border: 1.5px solid #e7e5e4;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+details.solution-accordion[open] {
+  border-color: #16a34a;
+  background: #ffffff;
+}
+
+summary.solution-toggle {
+  padding: 0.85rem 1.2rem;
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #1e293b;
+  background: #f5f5f4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  user-select: none;
+}
+summary.solution-toggle::-webkit-details-marker {
+  display: none;
+}
+details.solution-accordion[open] summary.solution-toggle {
+  background: #dcfce7;
+  color: #15803d;
+  border-bottom: 1px solid #86efac;
+}
+
+.solution-body {
+  padding: 1.25rem 1.5rem;
+  font-size: 1.22rem;
+  line-height: 1.75;
+}
+
+/* PYQ Controls Panel */
+.pyq-controls-panel {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pyq-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.filter-title {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-right: 0.25rem;
+}
+
+.pyq-filter-btn {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  padding: 0.3rem 0.75rem;
+  border-radius: 16px;
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.pyq-filter-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.pyq-filter-btn.active {
+  background: #1e3a8a;
+  color: #ffffff;
+  border-color: #1e3a8a;
+}
+
+/* Mastery Tracker */
+.mastery-tracker-box {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.mastery-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.mastery-track {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.mastery-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  transition: width 0.3s ease;
+}
+
+/* ==========================================================================
+   8. Floating Quick Navigation Widget
+   ========================================================================== */
+.floating-quick-nav {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 999;
+}
+
+.quick-nav-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #1e3a8a;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.quick-nav-btn:hover {
+  transform: scale(1.1);
+  background: #1d4ed8;
+}
+.quick-nav-btn.secondary {
+  background: #ffffff;
+  color: #1e3a8a;
+  border-color: #cbd5e1;
+}
+
+/* Mobile Floating Header Toggle Pill */
+.mobile-header-pill {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-70px);
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  padding: 0.45rem 1.15rem;
+  border-radius: 24px;
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.mobile-header-pill.pill-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   9. Mobile Optimizations
+   ========================================================================== */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  .notebook-viewport {
+    padding: 0.75rem 0.5rem 4rem;
+  }
+
+  .notebook-page-container {
+    padding: 1.25rem 1rem 2rem 1.6rem;
+    border-radius: 8px;
+  }
+
+  /* Compact red line on mobile */
+  .notebook-page-container::before {
+    left: 1.1rem;
+    width: 2px;
+  }
+
+  /* Hide spiral holes on narrow mobile screens to maximize reading space */
+  .notebook-page-container::after {
+    display: none;
+  }
+
+  .top-bar-inner {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .chapter-title-heading {
+    font-size: 1.15rem;
+  }
+
+  .hero-main-title {
+    font-size: 1.75rem;
+  }
+
+  .subtopic-quick-navigator {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .module-body {
+    padding: 1rem 0.75rem;
+  }
+
+  .question-card {
+    padding: 1rem 0.85rem;
+  }
+}
