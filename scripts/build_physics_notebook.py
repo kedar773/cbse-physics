@@ -13,6 +13,7 @@ import json
 import glob
 import markdown
 import sys
+from datetime import datetime, timezone
 
 # Ensure UTF-8 output on Windows
 if sys.platform == 'win32':
@@ -1124,6 +1125,69 @@ def render_simulation_widget(sim_type):
       </div>
     """
 
+def get_google_verification_meta():
+    """Reads Google verification code if provided in google_verification.txt or env var."""
+    ver_file = os.path.join(OUT_DIR, "google_verification.txt")
+    code = os.environ.get("GOOGLE_SITE_VERIFICATION", "")
+    if not code and os.path.exists(ver_file):
+        try:
+            with open(ver_file, "r", encoding="utf-8") as f:
+                code = f.read().strip()
+        except Exception:
+            code = ""
+    if code:
+        return f'<meta name="google-site-verification" content="{code}">'
+    return '<!-- Google Search Console Verification Meta Tag: add code to google_verification.txt or place here -->'
+
+def generate_sitemap(all_chapters_meta):
+    """Generates a standard sitemap.xml for Google Search Console and crawlers."""
+    base_url = "https://kedar773.github.io/cbse-physics/"
+    now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    
+    xml_lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        '  <url>',
+        f'    <loc>{base_url}</loc>',
+        f'    <lastmod>{now_str}</lastmod>',
+        '    <changefreq>weekly</changefreq>',
+        '    <priority>1.0</priority>',
+        '  </url>'
+    ]
+    
+    for class_key in ["Class_11", "Class_12"]:
+        cls_num = "11" if class_key == "Class_11" else "12"
+        folder = f"class-{cls_num}"
+        for ch in all_chapters_meta.get(class_key, []):
+            slug = ch['slug']
+            ch_url = f"{base_url}{folder}/{slug}/index.html"
+            xml_lines.extend([
+                '  <url>',
+                f'    <loc>{ch_url}</loc>',
+                f'    <lastmod>{now_str}</lastmod>',
+                '    <changefreq>weekly</changefreq>',
+                '    <priority>0.8</priority>',
+                '  </url>'
+            ])
+            
+    xml_lines.append('</urlset>')
+    sitemap_path = os.path.join(OUT_DIR, "sitemap.xml")
+    with open(sitemap_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(xml_lines) + "\n")
+    print(f"🗺️ Sitemap generated: {sitemap_path} ({len(xml_lines)-3} URLs)")
+
+def generate_robots_txt():
+    """Generates robots.txt for search engine crawlers and Googlebot."""
+    content = """User-agent: *
+Allow: /
+
+Sitemap: https://kedar773.github.io/cbse-physics/sitemap.xml
+"""
+    robots_path = os.path.join(OUT_DIR, "robots.txt")
+    with open(robots_path, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"🤖 robots.txt generated: {robots_path}")
+
 def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
     """Generates the full standalone HTML page for a Physics chapter."""
     cls_num = "11" if class_name == "Class_11" else "12"
@@ -1164,6 +1228,18 @@ def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title} — CBSE Class {cls_num} Physics | Kedar's Physics Engine</title>
+  <meta name="description" content="Comprehensive NCERT pure-line revision notes, step-by-step derivations, solved numerical examples, and 2020-2025 board exam PYQs for {title} (CBSE Class {cls_num} Physics).">
+  <meta name="keywords" content="{title}, CBSE Class {cls_num} Physics, NCERT {title}, Physics Derivations, CBSE Board PYQs, JEE Main Physics, NEET Physics">
+  <meta name="author" content="Kedar Krishna">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kedar773.github.io/cbse-physics/class-{cls_num}/{slug}/index.html">
+  
+  <!-- OpenGraph / Social Sharing -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://kedar773.github.io/cbse-physics/class-{cls_num}/{slug}/index.html">
+  <meta property="og:title" content="{title} — CBSE Class {cls_num} Physics | Kedar's Physics Engine">
+  <meta property="og:description" content="Comprehensive NCERT pure-line revision notes, derivations, and board PYQs for {title}.">
+  <meta property="og:site_name" content="Kedar's Physics Engine">
   
   <!-- Handwriting & Whiteboard Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1421,6 +1497,35 @@ def build_landing_page(all_chapters_meta):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kedar's Physics Engine — CBSE Class 11 &amp; 12 Senior Physics</title>
+  <meta name="description" content="Comprehensive interactive study notebook for CBSE Class 11 &amp; 12 Physics. Strictly NCERT pure-line notes, first-principles derivations, 2020-2025 PYQ vault with step-wise CBSE marking rubrics, interactive HTML5 physics lab simulations, and JEE/NEET competitive concepts.">
+  <meta name="keywords" content="CBSE Physics, Class 11 Physics, Class 12 Physics, NCERT Physics, CBSE Board Exam, PYQ Vault, Physics Derivations, Formula Sheet, JEE Physics, NEET Physics">
+  <meta name="author" content="Kedar Krishna">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kedar773.github.io/cbse-physics/">
+  
+  {get_google_verification_meta()}
+
+  <!-- OpenGraph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kedar773.github.io/cbse-physics/">
+  <meta property="og:title" content="Kedar's Physics Engine — CBSE Class 11 &amp; 12 Senior Physics">
+  <meta property="og:description" content="Comprehensive interactive study notebook for CBSE Class 11 &amp; 12 Physics. Strictly NCERT pure-line notes, derivations, and 2020-2025 PYQ vault.">
+  <meta property="og:site_name" content="Kedar's Physics Engine">
+
+  <!-- Schema.org Educational JSON-LD -->
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Kedar's Physics Engine",
+    "url": "https://kedar773.github.io/cbse-physics/",
+    "description": "Comprehensive CBSE Class 11 and Class 12 Physics digital notebook with NCERT pure-line notes, solved examples, PYQs, and HTML5 simulations.",
+    "founder": {{
+      "@type": "Person",
+      "name": "Kedar Krishna"
+    }}
+  }}
+  </script>
   
   <!-- Handwriting & Whiteboard Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1677,6 +1782,10 @@ def build_all():
     with open(manifest_file, 'w', encoding='utf-8') as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
     print(f"📋 Manifest generated: {manifest_file}")
+
+    # Pass 5: Generate Sitemap & Robots.txt for Google Search Console
+    generate_sitemap(all_chapters_meta)
+    generate_robots_txt()
 
     print("\n🎉 ALL 25 CHAPTERS & LANDING PAGE COMPILED SUCCESSFULLY!")
 
