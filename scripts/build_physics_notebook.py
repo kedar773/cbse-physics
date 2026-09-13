@@ -18,6 +18,9 @@ import sys
 if sys.platform == 'win32':
     sys.stdout.reconfigure(encoding='utf-8')
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from jee_advanced_data import render_jee_advanced_tab
+
 ROOT_DIR = r"E:\physics_cbse"
 OUT_DIR = r"E:\physics_cbse\physics_html_notebook"
 
@@ -1032,18 +1035,92 @@ def render_eli5_widget(eli5_data):
       </div>
     """
 
+def get_scratchpad_html():
+    """Builds interactive Whiteboard Scratchpad Drawer HTML and bottom-left toggle button."""
+    return """
+  <!-- Interactive Whiteboard Scratchpad Drawer -->
+  <div id="scratchpadModal">
+    <div class="scratchpad-header">
+      <div class="scratchpad-title">
+        <span>✏️</span> Student Notebook Scratchpad
+      </div>
+      <button id="scratchpadCloseBtn" class="scratchpad-btn" title="Close Scratchpad">&times;</button>
+    </div>
+    <div class="scratchpad-toolbar">
+      <button id="toolPen" class="scratchpad-btn active">Pen</button>
+      <button id="toolHighlighter" class="scratchpad-btn">Highlighter</button>
+      <button id="toolEraser" class="scratchpad-btn">Eraser</button>
+      <span style="font-size: 0.8rem; color: #64748b; margin-left: 0.4rem;">Color:</span>
+      <div class="color-dot active" data-color="#1e293b" style="background: #1e293b;" title="Charcoal"></div>
+      <div class="color-dot" data-color="#1d4ed8" style="background: #1d4ed8;" title="Royal Blue"></div>
+      <div class="color-dot" data-color="#dc2626" style="background: #dc2626;" title="Red Marker"></div>
+      <div class="color-dot" data-color="#15803d" style="background: #15803d;" title="Green"></div>
+      <div class="color-dot" data-color="#7e22ce" style="background: #7e22ce;" title="Purple"></div>
+      <input type="range" id="scratchpadSize" min="1" max="15" value="3" style="width: 60px; margin-left: auto;" title="Stroke Size">
+      <button id="scratchpadUndoBtn" class="scratchpad-btn">Undo</button>
+      <button id="scratchpadClearBtn" class="scratchpad-btn" style="color: #dc2626;">Clear</button>
+    </div>
+    <div class="scratchpad-canvas-wrap">
+      <canvas id="scratchpadCanvas"></canvas>
+    </div>
+  </div>
+
+  <!-- Floating Scratchpad Trigger Button (Bottom-Left Portable) -->
+  <button id="scratchpadToggleBtn" class="btn-scratchpad-toggle" title="Open Notebook Scratchpad to Solve Problems">
+    <span>✏️</span> Notebook Pad
+  </button>
+"""
+
+def get_simulation_modal_html():
+    """Builds interactive Physics Simulation Pop-up Modal Window."""
+    return """
+  <!-- Interactive Physics Simulation Pop-up Modal Window -->
+  <div id="simulationModalOverlay" class="sim-modal-overlay" style="display:none;">
+    <div class="sim-modal-dialog">
+      <div class="sim-modal-header">
+        <div class="sim-modal-title">
+          <span>🔬</span>
+          <span id="simModalTitleText">Interactive Physics Laboratory</span>
+          <span class="doodle-tag tag-purple" id="simModalDomainBadge" style="font-size:0.8rem; padding:0.15rem 0.5rem;">HTML5 Lab</span>
+        </div>
+        <button id="closeSimModalBtn" class="sim-modal-close-btn" title="Close Simulation">&times;</button>
+      </div>
+      <div class="sim-modal-body" id="simModalBody">
+        <!-- Dynamic simulation injected here -->
+      </div>
+    </div>
+  </div>
+"""
+
 def render_simulation_widget(sim_type):
-    """Builds interactive HTML5 Physics Simulation container."""
+    """Builds interactive HTML5 Physics Simulation launcher card for pop-up window."""
     if not sim_type:
         return ""
+    sim_info = {
+        'projectile': ('🎯 2D Projectile Trajectory & Kinematics Lab', 'Adjust launch speed, angle, and gravity to trace parabolic trajectories and inspect range & max height in real-time.'),
+        'incline': ('📐 Inclined Plane & Free Body Diagram (FBD) Lab', 'Vary slope angle, friction, and mass to observe real-time normal force, friction, and gravity component vectors.'),
+        'spring': ('🌀 Harmonic Oscillator & Mechanical Energy Distribution Lab', 'Inspect kinetic vs potential energy bar graphs proving total mechanical energy conservation.'),
+        'coulomb': ('⚡ Coulomb Force & Electric Field Vectors Lab', 'Position point charges and visualize electric field lines and repulsive/attractive vector forces.'),
+        'circuits': ('💡 Ohm\'s Law & Electron Drift Velocity Lab', 'Vary voltage and resistance to observe microscopic drift motion of electrons and live current telemetry.'),
+        'lorentz': ('🧲 Magnetic Lorentz Force & Cyclotron Orbit Lab', 'Control magnetic field strength and velocity to trace circular and helical cyclotron particle orbits.'),
+        'optics': ('🔍 Snell\'s Law & Total Internal Reflection (TIR) Lab', 'Vary refractive indices and incidence angle to observe critical angle reflection phenomena.'),
+        'bohr': ('⚛️ Bohr Atom Quantized Transitions & Spectral Lab', 'Trigger electron orbit jumps (n=1 to 5) and calculate emitted photon wavelengths.')
+    }
+    title, desc = sim_info.get(sim_type, ('Interactive Physics Lab', 'Explore physical variables in real-time.'))
     return f"""
-      <div class="notebook-section" style="margin: 2.5rem 0;">
-        <div class="sticky-note blue" style="margin-bottom: 1.25rem;">
-          <div class="sticky-title">🔬 Interactive HTML5 Physics Laboratory</div>
-          Experiment with physical variables directly on the canvas. Tweak sliders to observe real-time telemetry,
-          force vectors, trajectories, and energy conservation.
+      <div class="sim-launch-card">
+        <div class="sim-launch-info">
+          <div class="sim-launch-title-row">
+            <span style="font-size: 1.6rem;">🔬</span>
+            <h3 class="sim-launch-heading">{title}</h3>
+            <span class="doodle-tag tag-yellow" style="font-size: 0.8rem; padding: 0.15rem 0.55rem;">Interactive HTML5 Lab</span>
+          </div>
+          <p class="sim-launch-desc">{desc}</p>
         </div>
-        <div class="physics-sim-container" data-sim="{sim_type}"></div>
+        <button class="sim-launch-btn" data-launch-sim="{sim_type}" title="Launch simulation in pop-up window">
+          <span>🚀 Launch Simulation</span>
+          <span style="font-size: 0.82rem; opacity: 0.9;">(Pop-up Window)</span>
+        </button>
       </div>
     """
 
@@ -1245,40 +1322,17 @@ def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
 
         <!-- TAB 5: ADVANCED STUDIES (JEE) -->
         <section id="tab-advanced" class="notebook-tab-pane">
-          {sections['advanced_html'] if sections['advanced_html'] else '''
-            <div class="notebook-sheet" style="text-align:center; padding: 3rem 1.5rem;">
-              <div style="font-size:2.5rem; margin-bottom:1rem;">🚀</div>
-              <h3 style="color:#7c3aed; font-family:'Kalam', cursive;">NCERT &amp; Competitive Unified Scope</h3>
-              <p style="color:#475569; max-width:600px; margin: 0.5rem auto 1.5rem; font-size:1.1rem;">
-                All advanced analytical concepts, vector calculus derivations, and competitive problem-solving patterns
-                for this chapter have been completely harmonized into the NCERT Core Notes and Solved Examples above!
-              </p>
-            </div>
-          '''}
+          {render_jee_advanced_tab(slug)}
         </section>
 
       </div>
     </div>
   </main>
 
-  <!-- Sticky Scratchpad Drawer -->
-  <aside id="studentScratchpadDrawer" class="scratchpad-drawer">
-    <div class="scratchpad-header">
-      <span class="scratchpad-title">✏️ Notebook Scratchpad</span>
-      <div class="scratchpad-tools">
-        <button class="scratch-btn active" data-tool="pen" data-color="#1e3a8a" title="Blue Pen">🖊️</button>
-        <button class="scratch-btn" data-tool="pen" data-color="#dc2626" title="Red Pen">🖍️</button>
-        <button class="scratch-btn" data-tool="highlighter" data-color="rgba(254,240,138,0.5)" title="Highlighter">🖍️ Highlighter</button>
-        <button class="scratch-btn" data-tool="eraser" title="Eraser">🧹</button>
-        <button class="scratch-btn secondary" id="scratchUndo">↺</button>
-        <button class="scratch-btn secondary" id="scratchClear">Clear</button>
-      </div>
-      <button class="scratchpad-close-btn" id="closeScratchpadBtn">✕</button>
-    </div>
-    <div class="scratchpad-canvas-wrap">
-      <canvas id="scratchpadCanvas"></canvas>
-    </div>
-  </aside>
+  {get_scratchpad_html()}
+
+  {get_simulation_modal_html()}
+
 
   <!-- Floating Quick Navigation Widget -->
   <div class="floating-quick-nav">
@@ -1337,7 +1391,7 @@ def build_landing_page(all_chapters_meta):
             # Generate tags from key concepts (NOT just "PYQ")
             tags_html = " ".join([f'<span class="doodle-tag tag-blue">{c}</span>' for c in key_concepts[:3]])
             if sim_type:
-                tags_html += f' <span class="doodle-tag tag-yellow">🔬 Lab Simulation</span>'
+                tags_html += f' <span class="doodle-tag tag-yellow" data-launch-sim="{sim_type}" style="cursor:pointer;" title="Click to launch interactive simulation in pop-up window">🔬 Lab Simulation</span>'
 
             cards_html.append(f"""
               <div class="notebook-chapter-card" data-class="{cls_num}" data-domain="{domain.lower()}">
@@ -1396,8 +1450,8 @@ def build_landing_page(all_chapters_meta):
         <div class="stacked-brand-line2">Physics Engine</div>
       </div>
 
-      <div class="educator-stacked-title" style="margin: 0.75rem 0 1.25rem;">
-        <span class="doodle-tag tag-purple" style="font-size:1.1rem; padding:0.35rem 1rem;">Senior Secondary Physics Engine • NCERT Pure-Line Notes, Interactive Labs &amp; PYQ Vault</span>
+      <div class="educator-stacked-title" style="margin: 0.75rem auto 1.25rem;">
+        <span class="doodle-tag tag-purple" style="font-size:1.05rem; padding:0.4rem 1rem; white-space:normal; max-width:min(780px, 94vw); text-align:center; line-height:1.45;">Senior Secondary Physics Engine • NCERT Pure-Line Notes, Interactive Labs &amp; PYQ Vault</span>
       </div>
 
       <div class="portal-standard-badge">
@@ -1467,12 +1521,16 @@ def build_landing_page(all_chapters_meta):
 
   </main>
 
+  {get_scratchpad_html()}
+
+  {get_simulation_modal_html()}
+
   <!-- Site Footer -->
   <footer class="notebook-footer">
     <div class="footer-inner">
       <div class="footer-brand">
         <strong>Powered by Kedar's Physics Engine</strong>
-        <p>CBSE Class 11 &amp; 12 Physics Engine • Senior Secondary Academic Portal</p>
+        <p>CBSE Class 11 &amp; 12 Physics Engine • Mentored by Kedar Krishna (Senior Chemistry Educator)</p>
       </div>
       <div class="footer-contact">
         <button class="footer-contact-trigger open-contact-trigger">👨‍🏫 Instructor Contact</button>
@@ -1482,6 +1540,8 @@ def build_landing_page(all_chapters_meta):
 
   <!-- Scripts -->
   <script src="assets/js/notebook-animations.js"></script>
+  <script src="assets/js/notebook-scratchpad.js"></script>
+  <script src="assets/js/physics-simulations.js"></script>
   <script src="assets/js/portal-engine.js"></script>
   <script src="assets/js/search-engine.js"></script>
   <script src="assets/js/contact-modal.js"></script>

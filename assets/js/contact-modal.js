@@ -23,8 +23,8 @@
           <div class="contact-avatar-badge">👨‍🏫</div>
           <div class="contact-hero-info">
             <h3 class="contact-name">Kedar Krishna</h3>
-            <div class="contact-title">Senior STEM &amp; Physics Educator • CBSE &amp; JEE Specialist</div>
-            <div class="contact-tagline">Academic Mentor &amp; Physics Engine Architect</div>
+            <div class="contact-title">Senior STEM &amp; Chemistry Educator • CBSE &amp; JEE Specialist</div>
+            <div class="contact-tagline">Academic Mentor &amp; Chemistry Educator</div>
           </div>
         </div>
 

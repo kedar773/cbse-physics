@@ -144,7 +144,7 @@ Every core concept features an interactive flip switch:
 
 ## 👨‍🏫 Academic Mentorship & Offline Centers
 
-* **Educator & Mentor**: **Kedar Krishna** (*Senior STEM & Physics Specialist*)
+* **Educator & Mentor**: **Kedar Krishna** (*Senior STEM & Chemistry Educator*)
 * **Email**: [**chemistrykedar@gmail.com**](mailto:chemistrykedar@gmail.com)
 
 ### Offline Teaching Centers (Bhubaneswar, Odisha)

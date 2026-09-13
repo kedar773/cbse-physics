@@ -1301,43 +1301,171 @@
   }
 
   /* =========================================================================
-   * SIMULATION DISPATCHER
+   * SIMULATION METADATA & POP-UP MODAL WINDOW SYSTEM
    * ========================================================================= */
-  function initAllSimulations() {
-    document.querySelectorAll('.physics-sim-container').forEach(container => {
-      const simType = container.getAttribute('data-sim');
-      if (!simType || container.hasAttribute('data-initialized')) return;
-      container.setAttribute('data-initialized', 'true');
+  const SIMULATION_DETAILS = {
+    'projectile': {
+      title: '🎯 2D Projectile Trajectory & Kinematics Laboratory',
+      domain: 'Kinematics (Class 11 Ch 3 & 4)'
+    },
+    'incline': {
+      title: '📐 Inclined Plane Dynamics & Vector Free Body Diagram (FBD)',
+      domain: 'Laws of Motion (Class 11 Ch 4)'
+    },
+    'spring': {
+      title: '🌀 Harmonic Oscillator & Mechanical Energy Distribution',
+      domain: 'Oscillations & Waves (Class 11 Ch 13 & 14)'
+    },
+    'coulomb': {
+      title: '⚡ Coulomb Force Vectors & Electrostatic Field Simulation',
+      domain: 'Electrostatics (Class 12 Ch 1)'
+    },
+    'circuits': {
+      title: '💡 Ohm\'s Law & Microscopic Electron Drift Velocity',
+      domain: 'Current Electricity (Class 12 Ch 2)'
+    },
+    'lorentz': {
+      title: '🧲 Magnetic Lorentz Force & Helical Cyclotron Orbit',
+      domain: 'Moving Charges & Magnetism (Class 12 Ch 3)'
+    },
+    'optics': {
+      title: '🔍 Snell\'s Law Refraction & Total Internal Reflection (TIR)',
+      domain: 'Ray & Wave Optics (Class 12 Ch 7 & 8)'
+    },
+    'bohr': {
+      title: '⚛️ Bohr Quantized Atomic Transitions & Spectral Emission',
+      domain: 'Atoms & Nuclei (Class 12 Ch 10)'
+    }
+  };
 
-      switch (simType) {
-        case 'projectile':
-          initProjectileSim(container);
-          break;
-        case 'incline':
-          initInclineSim(container);
-          break;
-        case 'spring':
-          initSpringSim(container);
-          break;
-        case 'coulomb':
-          initCoulombSim(container);
-          break;
-        case 'circuits':
-          initCircuitsSim(container);
-          break;
-        case 'lorentz':
-          initLorentzSim(container);
-          break;
-        case 'optics':
-          initOpticsSim(container);
-          break;
-        case 'bohr':
-          initBohrSim(container);
-          break;
+  function launchSimulationModal(simType) {
+    if (!simType) return;
+    const overlay = document.getElementById('simulationModalOverlay');
+    const modalBody = document.getElementById('simModalBody');
+    const titleElem = document.getElementById('simModalTitleText');
+    const badgeElem = document.getElementById('simModalDomainBadge');
+
+    if (!overlay || !modalBody) return;
+
+    const details = SIMULATION_DETAILS[simType] || {
+      title: '🔬 Interactive Physics Laboratory',
+      domain: 'Physics Experiment'
+    };
+
+    if (titleElem) titleElem.textContent = details.title;
+    if (badgeElem) badgeElem.textContent = details.domain;
+
+    modalBody.innerHTML = `<div class="physics-sim-container" data-sim="${simType}"></div>`;
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const container = modalBody.querySelector('.physics-sim-container');
+      if (container) {
+        initSingleSimulation(container, simType);
+      }
+    }, 40);
+  }
+
+  function closeSimulationModal() {
+    const overlay = document.getElementById('simulationModalOverlay');
+    const modalBody = document.getElementById('simModalBody');
+    if (!overlay) return;
+
+    overlay.classList.remove('open');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      if (modalBody) modalBody.innerHTML = '';
+      document.body.style.overflow = '';
+    }, 200);
+  }
+
+  function initSingleSimulation(container, simType) {
+    switch (simType) {
+      case 'projectile':
+        initProjectileSim(container);
+        break;
+      case 'incline':
+        initInclineSim(container);
+        break;
+      case 'spring':
+        initSpringSim(container);
+        break;
+      case 'coulomb':
+        initCoulombSim(container);
+        break;
+      case 'circuits':
+        initCircuitsSim(container);
+        break;
+      case 'lorentz':
+        initLorentzSim(container);
+        break;
+      case 'optics':
+        initOpticsSim(container);
+        break;
+      case 'bohr':
+        initBohrSim(container);
+        break;
+    }
+  }
+
+  /* =========================================================================
+   * EVENT BINDINGS & DISPATCHER
+   * ========================================================================= */
+  function setupSimulationModalEvents() {
+    const overlay = document.getElementById('simulationModalOverlay');
+    const closeBtn = document.getElementById('closeSimModalBtn');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeSimulationModal);
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closeSimulationModal();
+        }
+      });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const overlay = document.getElementById('simulationModalOverlay');
+        if (overlay && overlay.classList.contains('open')) {
+          closeSimulationModal();
+        }
+      }
+    });
+
+    // Delegate click on launch buttons
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-launch-sim]');
+      if (btn) {
+        e.preventDefault();
+        const simType = btn.getAttribute('data-launch-sim');
+        if (simType) {
+          launchSimulationModal(simType);
+        }
       }
     });
   }
 
+  function initAllSimulations() {
+    setupSimulationModalEvents();
+
+    // Also initialize any inline containers if present
+    document.querySelectorAll('.physics-sim-container').forEach(container => {
+      const simType = container.getAttribute('data-sim');
+      if (!simType || container.hasAttribute('data-initialized') || container.closest('#simModalBody')) return;
+      container.setAttribute('data-initialized', 'true');
+      initSingleSimulation(container, simType);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', initAllSimulations);
+  window.launchSimulationModal = launchSimulationModal;
+  window.closeSimulationModal = closeSimulationModal;
   window.initAllSimulations = initAllSimulations;
 })();
+
