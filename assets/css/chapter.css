@@ -663,6 +663,16 @@ details.solution-accordion[open] summary.solution-toggle {
   border-color: #cbd5e1;
 }
 
+/* Offset floating scratchpad toggle so it does not collide with floating-quick-nav */
+body.notebook-canvas .btn-scratchpad-toggle {
+  right: 85px;
+}
+@media (max-width: 768px) {
+  body.notebook-canvas .btn-scratchpad-toggle {
+    right: 75px;
+  }
+}
+
 /* Mobile Floating Header Toggle Pill */
 .mobile-header-pill {
   position: fixed;

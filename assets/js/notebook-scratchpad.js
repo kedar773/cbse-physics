@@ -1,8 +1,8 @@
 /**
- * Interactive Physics Notebook Scratchpad Engine
- * Provides a responsive HTML5 canvas for scribbling, sketching free-body diagrams (FBDs),
- * solving derivations by hand, and practicing numericals directly inside the browser.
- * Compatible with both bottom-left portable toggle icon and top-bar header button.
+ * Interactive Whiteboard Scratchpad Engine
+ * Provides a responsive HTML5 canvas for scribbling, solving physics equations and FBDs by hand,
+ * and practicing CBSE derivations directly inside the browser.
+ * Faithfully matches Kedar's Mathematics Whiteboard scratchpad experience.
  */
 
 (function () {
@@ -20,6 +20,7 @@
     const modal = document.getElementById('scratchpadModal');
     const toggleBtn = document.getElementById('scratchpadToggleBtn');
     const topBarBtn = document.getElementById('openScratchpadBtn');
+    const quickNavBtn = document.getElementById('quickNavScratchpadBtn');
     const closeBtn = document.getElementById('scratchpadCloseBtn');
     const clearBtn = document.getElementById('scratchpadClearBtn');
     const undoBtn = document.getElementById('scratchpadUndoBtn');
@@ -35,33 +36,31 @@
     ctx = canvas.getContext('2d', { willReadFrequently: true });
 
     function resizeCanvas() {
-      const wrap = canvas.parentElement;
-      const rect = wrap ? wrap.getBoundingClientRect() : canvas.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
-      
+
+      // Save content before resize
       let imgData = null;
       if (canvas.width > 0 && canvas.height > 0) {
         try {
           imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         } catch (e) {
-          // ignore potential cors or blank canvas error
+          // ignore potential context read errors
         }
       }
 
-      const w = rect.width || 480;
-      const h = rect.height || 360;
-
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvas.style.width = w + 'px';
-      canvas.style.height = h + 'px';
-
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
 
       if (imgData) {
-        ctx.putImageData(imgData, 0, 0);
+        try {
+          ctx.putImageData(imgData, 0, 0);
+        } catch (e) {
+          // ignore
+        }
       }
     }
 
@@ -73,35 +72,50 @@
     }
 
     function openModal() {
-      modal.classList.add('open');
-      modal.style.display = 'flex';
-      setTimeout(() => {
+      if (!modal.classList.contains('open')) {
+        modal.classList.add('open');
         resizeCanvas();
         if (undoStack.length === 0) saveState();
-      }, 50);
+      }
     }
 
     function closeModal() {
       modal.classList.remove('open');
     }
 
-    function toggleModal() {
-      if (modal.classList.contains('open')) {
-        closeModal();
-      } else {
-        openModal();
+    function toggleModal(e) {
+      if (e) e.preventDefault();
+      const isOpen = modal.classList.toggle('open');
+      if (isOpen) {
+        resizeCanvas();
+        if (undoStack.length === 0) saveState();
       }
     }
 
-    // Toggle triggers (bottom-left portable icon, top-bar button, and any custom trigger)
+    // Toggle Modal Triggers
     if (toggleBtn) toggleBtn.addEventListener('click', toggleModal);
     if (topBarBtn) topBarBtn.addEventListener('click', toggleModal);
+    if (quickNavBtn) quickNavBtn.addEventListener('click', toggleModal);
 
-    document.querySelectorAll('.open-scratchpad-trigger').forEach(btn => {
-      btn.addEventListener('click', openModal);
+    // Fallback for any quick-nav button with title "Scratchpad"
+    document.querySelectorAll('.quick-nav-btn[title="Scratchpad"]').forEach(btn => {
+      btn.addEventListener('click', toggleModal);
     });
 
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    // Any contextual open trigger
+    document.querySelectorAll('.open-scratchpad-trigger').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeModal();
+      });
+    }
 
     // ESC key closes scratchpad
     window.addEventListener('keydown', (e) => {
@@ -110,12 +124,7 @@
       }
     });
 
-    // Tool switching
-    function updateActiveTool(activeBtn) {
-      [toolPen, toolHighlighter, toolEraser].forEach(b => b && b.classList.remove('active'));
-      if (activeBtn) activeBtn.classList.add('active');
-    }
-
+    // Tools & Colors
     if (toolPen) {
       toolPen.addEventListener('click', () => {
         currentTool = 'pen';
@@ -143,6 +152,11 @@
       });
     }
 
+    function updateActiveTool(activeBtn) {
+      [toolPen, toolHighlighter, toolEraser].forEach(b => b && b.classList.remove('active'));
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
     colorDots.forEach(dot => {
       dot.addEventListener('click', () => {
         colorDots.forEach(d => d.classList.remove('active'));
@@ -163,7 +177,7 @@
     if (undoBtn) {
       undoBtn.addEventListener('click', () => {
         if (undoStack.length > 1) {
-          undoStack.pop();
+          undoStack.pop(); // remove current
           const prev = undoStack[undoStack.length - 1];
           ctx.putImageData(prev, 0, 0);
         } else if (undoStack.length === 1) {
@@ -181,7 +195,9 @@
       });
     }
 
-    // Coordinate helper
+    // Pointer Events for Stylus, Mouse, and Touch
+    let lastX = 0, lastY = 0;
+
     function getCoords(e) {
       const rect = canvas.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -192,38 +208,30 @@
       };
     }
 
-    let lastX = 0, lastY = 0;
-
     function startDraw(e) {
       isDrawing = true;
-      const { x, y } = getCoords(e);
-      lastX = x;
-      lastY = y;
+      const coords = getCoords(e);
+      lastX = coords.x;
+      lastY = coords.y;
       draw(e);
     }
 
     function draw(e) {
       if (!isDrawing) return;
       if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
-      
-      const { x, y } = getCoords(e);
+
+      const coords = getCoords(e);
 
       ctx.beginPath();
       ctx.moveTo(lastX, lastY);
-      ctx.lineTo(x, y);
+      ctx.lineTo(coords.x, coords.y);
 
       ctx.strokeStyle = currentColor;
-      if (currentTool === 'highlighter') {
-        ctx.lineWidth = currentLineWidth * 3.5;
-      } else if (currentTool === 'eraser') {
-        ctx.lineWidth = currentLineWidth * 4.5;
-      } else {
-        ctx.lineWidth = currentLineWidth;
-      }
+      ctx.lineWidth = currentTool === 'highlighter' ? currentLineWidth * 3.5 : (currentTool === 'eraser' ? currentLineWidth * 4.5 : currentLineWidth);
       ctx.stroke();
 
-      lastX = x;
-      lastY = y;
+      lastX = coords.x;
+      lastY = coords.y;
     }
 
     function stopDraw() {

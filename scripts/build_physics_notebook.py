@@ -1036,13 +1036,13 @@ def render_eli5_widget(eli5_data):
     """
 
 def get_scratchpad_html():
-    """Builds interactive Whiteboard Scratchpad Drawer HTML and bottom-left toggle button."""
+    """Builds interactive Whiteboard Scratchpad Drawer HTML and floating toggle button."""
     return """
   <!-- Interactive Whiteboard Scratchpad Drawer -->
   <div id="scratchpadModal">
     <div class="scratchpad-header">
       <div class="scratchpad-title">
-        <span>✏️</span> Student Notebook Scratchpad
+        <span>✏️</span> Whiteboard Scratchpad
       </div>
       <button id="scratchpadCloseBtn" class="scratchpad-btn" title="Close Scratchpad">&times;</button>
     </div>
@@ -1065,9 +1065,9 @@ def get_scratchpad_html():
     </div>
   </div>
 
-  <!-- Floating Scratchpad Trigger Button (Bottom-Left Portable) -->
-  <button id="scratchpadToggleBtn" class="btn-scratchpad-toggle" title="Open Notebook Scratchpad to Solve Problems">
-    <span>✏️</span> Notebook Pad
+  <!-- Floating Scratchpad Trigger Button -->
+  <button id="scratchpadToggleBtn" class="btn-scratchpad-toggle" title="Open Whiteboard Scratchpad to Solve Problems">
+    <span>✏️</span> Whiteboard Pad
   </button>
 """
 
@@ -1339,7 +1339,7 @@ def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
     <button class="quick-nav-btn" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}})" title="Jump to Top">▲</button>
     <button class="quick-nav-btn secondary" onclick="document.getElementById('subtopicQuickNav')?.scrollIntoView({{behavior: 'smooth'}})" title="Subtopic Quick Index">📑</button>
     <button class="quick-nav-btn secondary" onclick="document.querySelector('[data-tab=\'tab-pyq\']')?.click()" title="PYQ Vault">🎯</button>
-    <button class="quick-nav-btn secondary" onclick="document.getElementById('openScratchpadBtn')?.click()" title="Scratchpad">✏️</button>
+    <button class="quick-nav-btn secondary" id="quickNavScratchpadBtn" title="Scratchpad">✏️</button>
   </div>
 
   <!-- Site Footer -->
