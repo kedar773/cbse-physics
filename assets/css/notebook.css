@@ -849,7 +849,8 @@ tr:hover {
 
 .portal-corner-btn,
 .portal-corner-academy,
-.portal-corner-contact {
+.portal-corner-contact,
+.portal-corner-apk {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -868,6 +869,14 @@ tr:hover {
   text-decoration: none;
 }
 
+.portal-corner-apk:hover {
+  background: #ecfdf5;
+  border-color: #059669;
+  color: #047857;
+  transform: translateY(-2px);
+  box-shadow: 2px 4px 0px rgba(5, 150, 105, 0.2);
+}
+
 .portal-corner-contact:hover {
   background: #eff6ff;
   border-color: #2563eb;
@@ -882,6 +891,30 @@ tr:hover {
   color: #6d28d9;
   transform: translateY(-2px);
   box-shadow: 2px 4px 0px rgba(124, 58, 237, 0.2);
+}
+
+.apk-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.apk-toggle-btn:hover {
+  background: #d1fae5;
+  border-color: #34d399;
+  color: #065f46;
+  transform: translateY(-1px);
 }
 
 .contact-toggle-btn {
@@ -1208,11 +1241,13 @@ tr:hover {
 
 @media (max-width: 420px) {
   .portal-corner-contact .contact-btn-label,
-  .portal-corner-academy .academy-btn-label {
+  .portal-corner-academy .academy-btn-label,
+  .portal-corner-apk .apk-btn-label {
     display: none;
   }
   .portal-corner-academy,
   .portal-corner-contact,
+  .portal-corner-apk,
   .portal-corner-btn {
     padding: 0.32rem 0.55rem;
     font-size: 0.82rem;

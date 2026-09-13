@@ -1277,6 +1277,7 @@ def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
         </select>
         <button class="search-trigger-btn open-search-trigger" title="Search (Ctrl+K)">🔍 Search</button>
         <button class="scratchpad-toggle-btn" id="openScratchpadBtn" title="Student Scratchpad">✏️ Scratchpad</button>
+        <a href="https://github.com/kedar773/physics-app/releases/latest" class="apk-toggle-btn" title="Download Kedar's Physics Engine App (Android APK)" target="_blank" rel="noopener noreferrer">📱 APK</a>
         <button class="contact-toggle-btn open-contact-trigger" title="Ask Doubt / Instructor Contact (Kedar Krishna)">✉️ Contact</button>
         <button class="academy-toggle-btn academy-modal-trigger" title="Kedar's STEM Academy — Switch between Physics, Maths, &amp; Chemistry">🏛️ Academy</button>
       </div>
@@ -1553,8 +1554,12 @@ def build_landing_page(all_chapters_meta):
     
     <!-- Hero Section -->
     <header class="portal-hero-section">
-      <!-- Top-Right Actions (Contact & Academy Switcher) -->
+      <!-- Top-Right Actions (App APK, Contact & Academy Switcher) -->
       <div class="portal-corner-actions">
+        <a href="https://github.com/kedar773/physics-app/releases/latest" class="portal-corner-btn portal-corner-apk" title="Download Kedar's Physics Engine App (Android APK)" target="_blank" rel="noopener noreferrer">
+          <span class="apk-btn-icon">📱</span>
+          <span class="apk-btn-label">App APK</span>
+        </a>
         <button class="portal-corner-btn portal-corner-contact open-contact-trigger" title="Ask Doubt / Instructor Contact (Kedar Krishna)">
           <span class="contact-btn-icon">✉️</span>
           <span class="contact-btn-label">Contact</span>
