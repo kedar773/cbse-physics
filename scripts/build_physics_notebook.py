@@ -1277,6 +1277,7 @@ def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
         </select>
         <button class="search-trigger-btn open-search-trigger" title="Search (Ctrl+K)">🔍 Search</button>
         <button class="scratchpad-toggle-btn" id="openScratchpadBtn" title="Student Scratchpad">✏️ Scratchpad</button>
+        <button class="academy-toggle-btn academy-modal-trigger" title="Kedar's STEM Academy — Switch between Physics, Maths, &amp; Chemistry">🏛️ Academy</button>
       </div>
     </div>
 
@@ -1439,6 +1440,7 @@ def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
   <script src="{rel_base}assets/js/chapter-engine.js"></script>
   <script src="{rel_base}assets/js/search-engine.js"></script>
   <script src="{rel_base}assets/js/contact-modal.js"></script>
+  <script src="{rel_base}assets/js/academy-modal.js"></script>
 </body>
 </html>
 """
@@ -1550,6 +1552,12 @@ def build_landing_page(all_chapters_meta):
     
     <!-- Hero Section -->
     <header class="portal-hero-section">
+      <!-- Academy Switcher Trigger (Top-Right) -->
+      <button class="portal-corner-academy academy-modal-trigger" title="Kedar's STEM Academy — Switch between Physics, Maths, &amp; Chemistry">
+        <span class="academy-btn-icon">🏛️</span>
+        <span class="academy-btn-label">Academy</span>
+      </button>
+
       <div class="portal-brand-stacked">
         <div class="stacked-brand-line1">Kedar's</div>
         <div class="stacked-brand-line2">Physics Engine</div>
@@ -1650,6 +1658,7 @@ def build_landing_page(all_chapters_meta):
   <script src="assets/js/portal-engine.js"></script>
   <script src="assets/js/search-engine.js"></script>
   <script src="assets/js/contact-modal.js"></script>
+  <script src="assets/js/academy-modal.js"></script>
 </body>
 </html>
 """
