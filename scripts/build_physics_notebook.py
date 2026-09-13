@@ -1277,6 +1277,7 @@ def build_chapter_page(class_name, chapter_meta, sections, all_chapters_menu):
         </select>
         <button class="search-trigger-btn open-search-trigger" title="Search (Ctrl+K)">🔍 Search</button>
         <button class="scratchpad-toggle-btn" id="openScratchpadBtn" title="Student Scratchpad">✏️ Scratchpad</button>
+        <button class="contact-toggle-btn open-contact-trigger" title="Ask Doubt / Instructor Contact (Kedar Krishna)">✉️ Contact</button>
         <button class="academy-toggle-btn academy-modal-trigger" title="Kedar's STEM Academy — Switch between Physics, Maths, &amp; Chemistry">🏛️ Academy</button>
       </div>
     </div>
@@ -1552,11 +1553,17 @@ def build_landing_page(all_chapters_meta):
     
     <!-- Hero Section -->
     <header class="portal-hero-section">
-      <!-- Academy Switcher Trigger (Top-Right) -->
-      <button class="portal-corner-academy academy-modal-trigger" title="Kedar's STEM Academy — Switch between Physics, Maths, &amp; Chemistry">
-        <span class="academy-btn-icon">🏛️</span>
-        <span class="academy-btn-label">Academy</span>
-      </button>
+      <!-- Top-Right Actions (Contact & Academy Switcher) -->
+      <div class="portal-corner-actions">
+        <button class="portal-corner-btn portal-corner-contact open-contact-trigger" title="Ask Doubt / Instructor Contact (Kedar Krishna)">
+          <span class="contact-btn-icon">✉️</span>
+          <span class="contact-btn-label">Contact</span>
+        </button>
+        <button class="portal-corner-btn portal-corner-academy academy-modal-trigger" title="Kedar's STEM Academy — Switch between Physics, Maths, &amp; Chemistry">
+          <span class="academy-btn-icon">🏛️</span>
+          <span class="academy-btn-label">Academy</span>
+        </button>
+      </div>
 
       <div class="portal-brand-stacked">
         <div class="stacked-brand-line1">Kedar's</div>

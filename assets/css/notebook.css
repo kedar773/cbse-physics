@@ -837,17 +837,26 @@ tr:hover {
    KEDAR'S STEM ACADEMY MODAL & TRIGGER (NOTEBOOK THEME)
    ========================================================================== */
 
-.portal-corner-academy {
+.portal-corner-actions {
   position: absolute;
   top: 1.25rem;
   right: 1.25rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.65rem;
+  z-index: 50;
+}
+
+.portal-corner-btn,
+.portal-corner-academy,
+.portal-corner-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   background: #fffdf9;
   border: 1.5px solid #334155;
   color: #1e293b;
-  padding: 0.45rem 1rem;
+  padding: 0.42rem 0.95rem;
   border-radius: 24px;
   font-family: var(--font-body, 'Inter', sans-serif);
   font-size: 0.92rem;
@@ -859,12 +868,43 @@ tr:hover {
   text-decoration: none;
 }
 
-.portal-corner-academy:hover {
-  background: #f8fafc;
-  border-color: #1d4ed8;
+.portal-corner-contact:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
   color: #1d4ed8;
   transform: translateY(-2px);
-  box-shadow: 2px 4px 0px rgba(29, 78, 216, 0.2);
+  box-shadow: 2px 4px 0px rgba(37, 99, 235, 0.2);
+}
+
+.portal-corner-academy:hover {
+  background: #fdf4ff;
+  border-color: #7c3aed;
+  color: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 2px 4px 0px rgba(124, 58, 237, 0.2);
+}
+
+.contact-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.contact-toggle-btn:hover {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #1e40af;
+  transform: translateY(-1px);
 }
 
 .academy-toggle-btn {
@@ -1146,11 +1186,17 @@ tr:hover {
 }
 
 @media (max-width: 640px) {
-  .portal-corner-academy {
+  .portal-corner-actions {
     top: 0.75rem;
     right: 0.75rem;
-    padding: 0.35rem 0.75rem;
+    gap: 0.4rem;
+  }
+  .portal-corner-academy,
+  .portal-corner-contact,
+  .portal-corner-btn {
+    padding: 0.32rem 0.65rem;
     font-size: 0.82rem;
+    gap: 0.3rem;
   }
   .academy-grid {
     grid-template-columns: 1fr;
@@ -1159,4 +1205,18 @@ tr:hover {
     max-height: 95vh;
   }
 }
+
+@media (max-width: 420px) {
+  .portal-corner-contact .contact-btn-label,
+  .portal-corner-academy .academy-btn-label {
+    display: none;
+  }
+  .portal-corner-academy,
+  .portal-corner-contact,
+  .portal-corner-btn {
+    padding: 0.32rem 0.55rem;
+    font-size: 0.82rem;
+  }
+}
+
 
